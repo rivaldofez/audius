@@ -27,8 +27,11 @@ jobs:
             -only-testing:AudiusTests \
             CODE_SIGNING_ALLOWED=NO
 
-   ui-tests:
-    runs-on: macos-latest
+
+
+  ui-tests:
+  name: Run UI Tests
+  runs-on: macos-latest
 
     steps:
       - name: Checkout code
