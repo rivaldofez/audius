@@ -19,11 +19,14 @@ jobs:
 
       - name: Resolve SPM dependencies
         run: xcodebuild -resolvePackageDependencies -scheme AudiusUITests
+      
+      - name: Create Simulator
+        run: xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 com.apple.CoreSimulator.SimRuntime.iOS-17-2
 
       - name: Build and run UI tests
         run: |
           xcodebuild \
             -scheme AudiusUITests \
-            -destination 'platform=iOS,name=iPhone 15,OS=latest' \
+            'platform=iOS Simulator,name=iPhone 15,OS=17.2' \
             -testPlan AudiusUITests \
             clean test
