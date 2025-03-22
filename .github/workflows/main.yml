@@ -27,7 +27,7 @@ jobs:
         run: |
           xcodebuild \
             -project Audius.xcodeproj \
-            -scheme Audius \
+            -scheme AudiusUITests \
             'platform=iOS Simulator,name=iPhone 15,OS=17.2' \
             -testPlan AudiusUITests \
             clean test
