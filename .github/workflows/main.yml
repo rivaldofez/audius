@@ -27,26 +27,23 @@ jobs:
             -only-testing:AudiusTests \
             CODE_SIGNING_ALLOWED=NO
 
-  ui-tests:
-    name: Run UI Tests
+   ui-tests:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Select Xcode Version
-        run: sudo xcode-select -switch /Applications/Xcode_15.2.app/Contents/Developer
+      - name: Set up Xcode
+        run: sudo xcode-select -switch /Applications/Xcode.app
 
-      - name: Boot Simulator
-        run: xcrun simctl boot "iPhone 15"
+      - name: Resolve SPM dependencies
+        run: xcodebuild -resolvePackageDependencies -scheme Audius
 
-      - name: Run UI Tests
+      - name: Build and run UI tests
         run: |
-          xcodebuild test \
-            -project Audius.xcodeproj \
+          xcodebuild \
             -scheme AudiusUITests \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
-            -only-testing:AudiusUITests \
-            CODE_SIGNING_ALLOWED=NO
-
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' \
+            -testPlan UITests \
+            clean test
